@@ -21,8 +21,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
-          role-session-name: github-actions-deploy
+          
           aws-region: us-east-1
 
       - name: Create S3 Bucket with Website Configuration
