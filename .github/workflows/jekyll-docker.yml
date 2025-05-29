@@ -23,15 +23,15 @@ jobs:
       - name: Create S3 Bucket with Website Configuration
         run: |
           aws s3api create-bucket \
-            --bucket arn:aws:s3:::cli-project3-bucket  \
+            --bucket cli-project3-bucket  \
             --region us-east-1
 
           aws s3api put-public-access-block \
-            --bucket arn:aws:s3:::cli-project3-bucket  \
+            --bucket cli-project3-bucket  \
             --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
 
           aws s3api put-bucket-website \
-            --bucket arn:aws:s3:::cli-project3-bucket  \
+            --bucket cli-project3-bucket  \
             --website-configuration '{
                 "IndexDocument": {
                     "Suffix": "index.html"
@@ -43,7 +43,7 @@ jobs:
 
           # Add a bucket policy to allow public read access
           aws s3api put-bucket-policy \
-            --bucket arn:aws:s3:::cli-project3-bucket  \
+            --bucket cli-project3-bucket  \
             --policy '{
                 "Version": "2012-10-17",
                 "Statement": [
@@ -51,15 +51,15 @@ jobs:
                         "Effect": "Allow",
                         "Principal": "*",
                         "Action": "s3:GetObject",
-                        "Resource": "arn:aws:s3:::arn:aws:s3:::cli-project3-bucket /*"
+                        "Resource": "arn:aws:s3:::cli-project3-bucket /*"
                     }
                 ]
             }'
             
       - name: Display Website URL
         run: |
-          echo "Your website is hosted at http://arn:aws:s3:::cli-project3-bucket .s3-website-us-east-1.amazonaws.com"
+          echo "Your website is hosted at http://cli-project3-bucket .s3-website-us-east-1.amazonaws.com"
 
       - name: Deploy static site to S3 bucket
         run: |
-          aws s3 sync ./public/ s3://arn:aws:s3:::cli-project3-bucket  --delete
+          aws s3 sync ./public/ s3://cli-project3-bucket  --delete
